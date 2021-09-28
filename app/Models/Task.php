@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Task extends Model
 {
     // 状態定義
     const STATUS = [
-        1 => [ 'label' => '未着手'],
-        2 => [ 'label' => '着手中'],
-        3 => [ 'label' => '完了'],
+        1 => [ 'label' => '未着手', 'class' => 'label-danger'],
+        2 => [ 'label' => '着手中', 'class' => 'label-info'],
+        3 => [ 'label' => '完了', 'class' => ''],
     ];
 
     // 状態のラベル
@@ -28,6 +29,13 @@ class Task extends Model
             return '';
         }
 
-        return self::STATUS[$status]['label'];
+        return self::STATUS[$status]['class'];
+    }
+
+    public function getFormattedDueDateAttribute()
+    {
+        // Carbonライブラリを使って期限日の値の形式を変更
+        return Carbon::createFromFormat('Y-m-d', $this->attributes['due_date'])
+            ->format('Y/m/d');
     }
 }
