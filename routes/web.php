@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\FolderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +15,15 @@ use App\Http\Controllers\TaskController;
 */
 
 Route::get('/folders/{id}/tasks', [TaskController::class, 'index'])->name('tasks.index');
+// フォルダ作成ページを表示
+Route::get('/folders/create', [FolderController::class, 'showCreateForm'])->name('folders.create');
+// フォルダ作成処理を実行する
+Route::post('/folders/create', [FolderController::class, 'create']);
+
+/*------------------------------------------------------------------------
+Routeクラスのgetメソッド、postメソッド使用（RouteクラスにはHTTPメソッドに応じたクラスメソッドが用意されている
+
+nameメソッドによるルートの命名はgetのみにしている
+->名前を付けて呼び出せるのはURLだけなので、同じURLでHTTPメソッド違いのルートがいくつかある場合
+はどれか一つに名前を付ければOK
+------------------------------------------------------------------------*/
