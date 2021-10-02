@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Folder;  // チュートリアルサイトの解説ではuse App\Folder
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; // クラスのインポート
+use App\Http\Requests\CreateFolder;
 
 class FolderController extends Controller
 {
@@ -14,7 +15,7 @@ class FolderController extends Controller
     }
 
     // フォルダ作成のルート
-    public function create(Request $request) //Requestクラスのインスタンスを受け入れる記述
+    public function create(CreateFolder $request) //Requestクラスのインスタンスを受け入れる記述
     {
         // フォルダモデルのインスタンスを作成する
         $folder = new Folder();
@@ -26,7 +27,7 @@ class FolderController extends Controller
         $folder->save();
 
         // フォルダを作成できたら、そのフォルダに対応するタスク一覧画面に遷移
-        return redirect()->route('tasks,index', [
+        return redirect()->route('tasks.index', [
             'id' => $folder->id
         ]);
     }
@@ -57,4 +58,10 @@ Requestクラスのインスタンス$requestにつめて引数として渡し�
 ・画面を作る必要ないのでviewメソッドは呼ばない
 ・代わりにredirectメソッドを呼ぶ
 ・リダイレクト先を指定するために、routeメソッドを呼び出している
+
+#FormRequest
+    当初指定していたRequestクラスと互換性があるので、
+    FromRequestクラスを指定することで、入力値などのRequestクラスの機能はそのままに
+    バリデーションチェックを追加することができる。
+
 -----------------------------------------------------------------------*/
