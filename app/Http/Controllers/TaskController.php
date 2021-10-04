@@ -29,6 +29,14 @@ class TaskController extends Controller
             'tasks' => $tasks,
         ]);
     }
+
+    //フォームの表示
+    public function showCreateForm(int $id)
+    {
+        return view('tasks/create', [
+            'folder_id' => $id
+        ]);
+    }
 }
 
 /*------------------------------------------------------------------
@@ -41,4 +49,9 @@ class TaskController extends Controller
 
  getメソッドで構築されたSQLをデータベースに発行して結果を取得している
     ※get()を書かないと値を取得できない
-*/
+
+ #showCreateForm
+    ・テンプレートでform要素のaction属性としてタスク作成URL(/folders/{id}/tasks/create)
+    をつくるためにフォルダのIDが必要なので、コントローラーメソッドの引数で受け取ってview関数
+    でテンプレートに渡している。
+--------------------------------------------------------------------*/

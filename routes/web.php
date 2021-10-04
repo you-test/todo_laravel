@@ -19,6 +19,10 @@ Route::get('/folders/{id}/tasks', [TaskController::class, 'index'])->name('tasks
 Route::get('/folders/create', [FolderController::class, 'showCreateForm'])->name('folders.create');
 // フォルダ作成処理を実行する
 Route::post('/folders/create', [FolderController::class, 'create']);
+//タスク作成ページを表示
+Route::get('/folders/{id}/tasks/create', [TaskController::class, 'showCreateForm'])->name('tasks.create');
+//タスク作成処理を実行する
+Route::post('/folders/{id}/tasks/create', [TaskController::class, 'create']);
 
 /*------------------------------------------------------------------------
 Routeクラスのgetメソッド、postメソッド使用（RouteクラスにはHTTPメソッドに応じたクラスメソッドが用意されている
