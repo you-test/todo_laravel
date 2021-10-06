@@ -15,14 +15,18 @@ use App\Http\Controllers\FolderController;
 */
 
 Route::get('/folders/{id}/tasks', [TaskController::class, 'index'])->name('tasks.index');
-// フォルダ作成ページを表示
+//フォルダ作成ページを表示
 Route::get('/folders/create', [FolderController::class, 'showCreateForm'])->name('folders.create');
-// フォルダ作成処理を実行する
+//フォルダ作成処理を実行する
 Route::post('/folders/create', [FolderController::class, 'create']);
 //タスク作成ページを表示
 Route::get('/folders/{id}/tasks/create', [TaskController::class, 'showCreateForm'])->name('tasks.create');
 //タスク作成処理を実行する
 Route::post('/folders/{id}/tasks/create', [TaskController::class, 'create']);
+//タスク編集ページを表示する。
+Route::get('/folders/{id}/tasks/{task_id}/edit', [TaskController::class,  'showEditForm'])->name('tasks.edit');
+//タスク編集処理を実行する。
+Route::post('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'edit']);
 
 /*------------------------------------------------------------------------
 Routeクラスのgetメソッド、postメソッド使用（RouteクラスにはHTTPメソッドに応じたクラスメソッドが用意されている

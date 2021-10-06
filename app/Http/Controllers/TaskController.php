@@ -6,7 +6,8 @@ use App\Models\Folder; //チュートリアルサイトでは "use App\Folder;"
 use App\Models\Task; //チュートリアルサイトでは "use App\Task;"
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTask;
-use GuzzleHttp\Promise\Create;
+use App\Http\Requests\EditTask;
+use function GuzzleHttp\Promise\task;
 
 class TaskController extends Controller
 {
@@ -53,6 +54,38 @@ class TaskController extends Controller
 
         return redirect()->route('tasks.index', [
             'id' => $current_folder->id,
+        ]);
+    }
+
+    /**
+     * GEt /folders/{id}/tasks/{task_id}/edit
+     * 入力フォームの表示
+     */
+    public function showEditForm(int $id, int $task_id)
+    {
+        $task = Task::find($task_id);
+
+        //画面が表示された時点でタスクの各項目の値がすでに入っている状態にする
+        //input要素のvalueに値を入れるためにタスクを渡す
+        return view('tasks/edit',[
+            'task' => $task,
+        ]);
+    }
+
+    public function edit(int $id, int $task_id, EditTask $request)
+    {
+        //1.リクエストされたIDでタスクデータを取得する。これが編集対象。
+        $task = Task::find($task_id);
+
+        //2.編集対象のタスクデータに入力値を詰めてsaveする。
+        $task->title = $request->title;
+        $task->status = $request->status;
+        $task->due_date = $request->due_date;
+        $task->save();
+
+        //3.編集対象のタスクが属するタスク一覧画面へリダイレクトする。
+        return redirect()->route('tasks.index', [
+            'id' => $task->folder_id,
         ]);
     }
 }
