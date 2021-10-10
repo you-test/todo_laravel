@@ -27,6 +27,9 @@ Route::post('/folders/{id}/tasks/create', [TaskController::class, 'create']);
 Route::get('/folders/{id}/tasks/{task_id}/edit', [TaskController::class,  'showEditForm'])->name('tasks.edit');
 //タスク編集処理を実行する。
 Route::post('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'edit']);
+//ホーム画面
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 /*------------------------------------------------------------------------
 Routeクラスのgetメソッド、postメソッド使用（RouteクラスにはHTTPメソッドに応じたクラスメソッドが用意されている
