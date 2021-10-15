@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\FolderController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +31,10 @@ Route::get('/folders/{id}/tasks/{task_id}/edit', [TaskController::class,  'showE
 Route::post('/folders/{id}/tasks/{task_id}/edit', [TaskController::class, 'edit']);
 //ホーム画面
 Route::get('/', [HomeController::class, 'index'])->name('home');
+//認証機能
+Auth::routes();
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 /*------------------------------------------------------------------------
 Routeクラスのgetメソッド、postメソッド使用（RouteクラスにはHTTPメソッドに応じたクラスメソッドが用意されている
